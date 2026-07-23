@@ -3,6 +3,7 @@ name: Teste de agendamento
 on:
   schedule:
     - cron: '*/5 * * * *'
+  workflow_dispatch: 
 
 jobs:
   validate-context:
