@@ -2,14 +2,26 @@ name: Teste de agendamento
 
 on:
   schedule:
-    - cron: '0 15 * * *'
+    - cron: '*/10 * * * *'
 
 jobs:
   validate-context:
     name: Validate workflow context
     runs-on: ubuntu-latest
     steps:
-      - name: Determine branch from schedule
+      - name: Check local time in Portugal
+        id: inventory
+        shell: bash
+        run: |
+          current_time="$(TZ=Europe/Lisbon date '+%H:%M')"
+          echo "Hora local em Portugal: ${current_time}"
+
+          if [ "${current_time}" = "16:17" ]; then
+            branch="dev"
+          fi
+          echo "branch=${branch}" >> "$GITHUB_OUTPUT"  
+
+      - name: Determine hour executed from schedule
         id: inventory
         shell: bash
         run: |
