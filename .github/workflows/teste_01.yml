@@ -3,7 +3,6 @@ name: Teste de agendamento
 on:
   schedule:
     - cron: '*/5 * * * *'
-      timezone: "Europe/London"
 
 jobs:
   validate-context:
@@ -14,4 +13,4 @@ jobs:
         id: inventory
         shell: bash
         run: |
-          echo "Este workflow foi disparado pelo agendamento do GitHub Actions às ${{ github.event.schedule }}."
+          echo "Este workflow foi disparado pelo agendamento do GitHub Actions às $(date +'%H:%M:%S')"
