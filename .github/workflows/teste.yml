@@ -1,23 +1,34 @@
 name: Teste
 
 on:
-  workflow_dispatch:
-    inputs:
-      inventory:
-        description: Branch to deploy
-        required: true
-        type: string
+  schedule:
+    - cron: '0 14 * * *'
+    - cron: '0 15 * * *'
 
 jobs:
   validate-context:
     name: Validate workflow context
     runs-on: ubuntu-latest
     steps:
+      - name: Determine branch from schedule
+        id: inventory
+        shell: bash
+        run: |
+          if [ "${{ github.event.schedule }}" = "0 14 * * *" ]; then
+            branch="dev"
+          elif [ "${{ github.event.schedule }}" = "0 15 * * *" ]; then
+            branch="qual"
+          else
+            branch="dev"
+          fi
+
+          echo "branch=${branch}" >> "$GITHUB_OUTPUT"
+
       - name: Checkout branch to consider
         uses: actions/checkout@v7
         with:
-          repository: ${{github.repository}}
-          ref: ${{ github.event.inputs.inventory }}
+          repository: ${{ github.repository }}
+          ref: ${{ steps.inventory.outputs.branch }}
           show-progress: true
 
       - name: Show README content
