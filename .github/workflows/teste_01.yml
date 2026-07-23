@@ -3,6 +3,9 @@ name: Teste de agendamento
 on:
   schedule:
     - cron: '*/5 * * * *'
+      branches:
+        include:
+        - main
 
 jobs:
   validate-context:
