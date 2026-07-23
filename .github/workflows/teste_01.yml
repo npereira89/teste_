@@ -2,7 +2,8 @@ name: Teste de agendamento
 
 on:
   schedule:
-    - cron: '15 17 * * 1-5'
+    - cron: '30 17 * * 1-5'
+      timezone: 'Europe/Lisbon'
 
 jobs:
   validate-context:
