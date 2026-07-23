@@ -10,19 +10,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check local time in Portugal
-        id: inventory
+        id: check-time
         shell: bash
         run: |
           current_time="$(TZ=Europe/Lisbon date '+%H:%M')"
           echo "Hora local em Portugal: ${current_time}"
 
           if [ "${current_time}" = "16:17" ]; then
-            branch="dev"
+            hour=${current_time}
           fi
-          echo "branch=${branch}" >> "$GITHUB_OUTPUT"  
+          echo "hour=${hour}" >> "$GITHUB_OUTPUT"  
 
       - name: Determine hour executed from schedule
         id: inventory
         shell: bash
         run: |
-          echo "Este workflow foi disparado pelo agendamento do GitHub Actions às ${{ github.event.schedule }}."
+          echo "Este workflow foi disparado pelo agendamento do GitHub Actions às ${{ check-time.outputs.hour }}."
