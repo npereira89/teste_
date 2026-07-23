@@ -1,0 +1,27 @@
+name: Teste
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      inventory:
+        description: Branch to deploy
+        required: false
+        default: release/1.0
+        type: string
+
+jobs:
+  validate-context:
+    name: Validate workflow context
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch to consider
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.inventory }}
+
+      - name: Show README content
+        run: |
+          cat README.md
