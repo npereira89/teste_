@@ -9,20 +9,8 @@ jobs:
     name: Validate workflow context
     runs-on: ubuntu-latest
     steps:
-      - name: Check local time in Portugal
-        id: check-time
-        shell: bash
-        run: |
-          current_time="$(TZ=Europe/Lisbon date '+%H:%M')"
-          echo "Hora local em Portugal: ${current_time}"
-
-          if [ "${current_time}" = "16:30" ]; then
-            hora=${current_time}
-          fi
-          echo "hora_def=${hora}" >> "$GITHUB_OUTPUT"  
-
       - name: Determine hour executed from schedule
         id: inventory
         shell: bash
         run: |
-          echo "Este workflow foi disparado pelo agendamento do GitHub Actions às ${{ check-time.outputs.hora_def }}."
+          echo "Este workflow foi disparado pelo agendamento do GitHub Actions às ${{ github.event.schedule }}."
