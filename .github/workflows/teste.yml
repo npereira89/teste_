@@ -1,11 +1,12 @@
 name: Teste
 
-workflow_dispatch:
-  inputs:
-    inventory:
-      description: Branch to deploy
-      required: true
-      type: string
+on:
+  workflow_dispatch:
+    inputs:
+      inventory:
+        description: Branch to deploy
+        required: true
+        type: string
 
 jobs:
   validate-context:
