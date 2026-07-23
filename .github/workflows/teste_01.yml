@@ -2,8 +2,8 @@ name: Teste de agendamento
 
 on:
   schedule:
+    - cron: '20 20 * * *'
     - cron: '*/5 * * * *'
-      cron: '20 20 * * *'
       branches:
         include:
         - main
