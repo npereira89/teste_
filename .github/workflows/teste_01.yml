@@ -2,11 +2,13 @@ name: Teste de agendamento
 
 on:
   schedule:
-    - cron: '25 21 * * *'
-    #- cron: '*/5 * * * *'
+    - cron: '30 20 * * *'
       branches:
         include:
         - main
+permissions:
+  # All other permissions are set to none by default
+  contents: read
 
 jobs:
   validate-context:
