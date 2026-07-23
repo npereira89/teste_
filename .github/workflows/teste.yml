@@ -2,7 +2,7 @@ name: Teste
 
 on:
   schedule:
-    - cron: '30 13 * * *'
+    - cron: '0 20 * * *'
 
 jobs:
   validate-context:
@@ -13,10 +13,10 @@ jobs:
         id: inventory
         shell: bash
         run: |
-          if [ "${{ github.event.schedule }}" = "30 13 * * *" ]; then
-            branch="qual"
-          else
+          if [ "${{ github.event.schedule }}" = "0 20 * * *" ]; then
             branch="dev"
+          else
+            branch="qual"
           fi
 
           echo "branch=${branch}" >> "$GITHUB_OUTPUT"
