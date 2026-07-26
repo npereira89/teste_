@@ -2,8 +2,8 @@ name: Teste
 
 on:
   schedule:
-    - cron: '0 9 * * *' #  
-      timezone: 'Europe/London'
+    - cron: '0 9 * * 1-5' #  
+    - cron: "0 6 * * 1-5"  
 
 jobs:
   validate-context:
@@ -16,7 +16,7 @@ jobs:
         run: |
           if [ "${{ github.event.schedule }}" = "0 9 * * *" ]; then
             branch="dev"
-          else
+          elif [ "${{ github.event.schedule }}" = "0 6 * * 1-5" ]; then
             branch="qual"
           fi
 
