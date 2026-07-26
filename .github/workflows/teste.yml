@@ -2,7 +2,7 @@ name: Teste
 
 on:
   schedule:
-    - cron: '* * * 1-5' # it will run at 9:00 AM UTC every weekday (Monday through Friday) 
+    - cron: '* * * * 0-6' # it will run at 9:00 AM UTC every weekday (Monday through Friday)
 
 jobs:
   validate-context:
@@ -18,7 +18,7 @@ jobs:
             branch="dev"
           elif [ "${current_time}" = "05:00" ]; then
             branch="qual"
-          elif [ "${current_time}" = "23:40" ]; then
+          elif [ "${current_time}" = "23:45" ]; then
             echo "This is Sunday!! Nothing to say!"
           fi
 
