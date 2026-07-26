@@ -2,8 +2,7 @@ name: Agenda
 
 on:
   schedule:
-    - cron: "50 22 * * 0"  
-      timezone: "Europe/Lisbon" # it will run at 22:30 PM Lisbon time in Sunday
+    - cron: "50 21 * * 0"  # it will run at 22:30 PM Lisbon time in Sunday
     
 jobs:
   validate-context:
@@ -16,7 +15,9 @@ jobs:
         run: |
           if [ "${{ github.event.schedule }}" = "50 22 * * 0"  ]; then
             echo "OK!!"
+          else
+            echo "NOK!!"
           fi
-          echo "NOK!!"
+          
           
           
