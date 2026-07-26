@@ -2,7 +2,7 @@ name: Agenda
 
 on:
   schedule:
-    - cron: "30 21 * * 0"  # it will run at 21:50 PM UTC in Sunday 
+    - cron: "30 22 * * 0"  # it will run at 21:50 PM UTC in Sunday 
     
 jobs:
   validate-context:
@@ -18,7 +18,7 @@ jobs:
         id: inventory
         shell: bash
         run: |
-          if [ "${{ github.event.schedule }}" = "30 21 * * 0"]; then
+          if [ "${{ github.event.schedule }}" = "30 22 * * 0"]; then
             echo "OK!!"
           fi
           echo "NOK!!"
