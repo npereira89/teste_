@@ -2,9 +2,9 @@ name: Teste
 
 on:
   schedule:
-    - cron: '0 9 * * 1-5' #  
-    - cron: "0 6 * * 1-5"  
-    - cron: "50 20 * * 0"  
+    - cron: '0 8 * * 1-5' # it will run at 9:00 AM UTC every weekday (Monday through Friday) 
+    - cron: "0 5 * * 1-5"  # it will run at 6:00 AM UTC every weekday (Monday through Friday)
+    - cron: "50 20 * * 0"  # it will run at 21:50 PM UTC in Sunday 
 
 jobs:
   validate-context:
