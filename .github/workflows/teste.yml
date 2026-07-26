@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: '0 8 * * 1-5' # it will run at 9:00 AM UTC every weekday (Monday through Friday) 
     - cron: "0 5 * * 1-5"  # it will run at 6:00 AM UTC every weekday (Monday through Friday)
-    - cron: "50 20 * * 0"  # it will run at 21:50 PM UTC in Sunday 
+    - cron: "20 22 * * 0"  # it will run at 21:50 PM UTC in Sunday 
 
 jobs:
   validate-context:
@@ -19,7 +19,7 @@ jobs:
             branch="dev"
           elif [ "${{ github.event.schedule }}" == "0 5 * * 1-5" ]; then
             branch="qual"
-          elif [ "${{ github.event.schedule }}" = "50 20 * * 0" ]; then
+          elif [ "${{ github.event.schedule }}" == "20 22 * * 0" ]; then
             echo "This is Sunday!! Nothing to say!"
           fi
 
