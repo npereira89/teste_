@@ -2,9 +2,7 @@ name: Teste
 
 on:
   schedule:
-    - cron: '0 8 * * 1-5' # it will run at 9:00 AM UTC every weekday (Monday through Friday) 
-    - cron: "0 5 * * 1-5"  # it will run at 6:00 AM UTC every weekday (Monday through Friday)
-    - cron: "20 22 * * 0"  # it will run at 21:50 PM UTC in Sunday 
+    - cron: '* * * 1-5' # it will run at 9:00 AM UTC every weekday (Monday through Friday) 
 
 jobs:
   validate-context:
@@ -15,11 +13,12 @@ jobs:
         id: inventory
         shell: bash
         run: |
-          if [ "${{ github.event.schedule }}" == "0 8 * * 1-5" ]; then
+          current_time="$(TZ=Europe/Lisbon date '+%H:%M')"
+          if [ "${{ current_time }}" == "08:00" ]; then
             branch="dev"
-          elif [ "${{ github.event.schedule }}" == "0 5 * * 1-5" ]; then
+          elif [ "${{ current_time }}" == "05:00" ]; then
             branch="qual"
-          elif [ "${{ github.event.schedule }}" == "20 22 * * 0" ]; then
+          elif [ "${{ current_time }}" == "23:35" ]; then
             echo "This is Sunday!! Nothing to say!"
           fi
 
