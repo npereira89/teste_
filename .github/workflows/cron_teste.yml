@@ -1,0 +1,21 @@
+name: Agenda
+
+on:
+  schedule:
+    - cron: "10 21 * * 0"  # it will run at 21:50 PM UTC in Sunday 
+    
+jobs:
+  validate-context:
+    name: Validate workflow context
+    runs-on: ubuntu-latest
+    steps:
+      - name: Determine branch from schedule
+        id: inventory
+        shell: bash
+        run: |
+          if [ "${{ github.event.schedule }}" = "10 21 * * 0"]; then
+            echo "OK!!"
+          fi
+          echo "NOK!!"
+          
+          
