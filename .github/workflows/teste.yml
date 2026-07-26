@@ -14,11 +14,11 @@ jobs:
         shell: bash
         run: |
           current_time="$(TZ=Europe/Lisbon date '+%H:%M')"
-          if [ "${{ current_time }}" == "08:00" ]; then
+          if [ "${current_time}" = "08:00" ]; then
             branch="dev"
-          elif [ "${{ current_time }}" == "05:00" ]; then
+          elif [ "${current_time}" = "05:00" ]; then
             branch="qual"
-          elif [ "${{ current_time }}" == "23:35" ]; then
+          elif [ "${current_time}" = "23:40" ]; then
             echo "This is Sunday!! Nothing to say!"
           fi
 
