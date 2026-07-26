@@ -2,23 +2,19 @@ name: Agenda
 
 on:
   schedule:
-    - cron: "30 22 * * 0"  # it will run at 21:50 PM UTC in Sunday 
+    - cron: "50 22 * * 0"  
+      timezone: "Europe/Lisbon" # it will run at 22:30 PM Lisbon time in Sunday
     
 jobs:
   validate-context:
     name: Validate workflow context
     runs-on: ubuntu-latest
     steps:
-      - name: Set Timezone
-        uses: szenius/set-timezone@v2.0
-        with:
-          timezoneLinux: "Europe/Lisbon"
-
       - name: Determine branch from schedule
         id: inventory
         shell: bash
         run: |
-          if [ "${{ github.event.schedule }}" = "30 22 * * 0"]; then
+          if [ "${{ github.event.schedule }}" = "50 22 * * 0"  ]; then
             echo "OK!!"
           fi
           echo "NOK!!"
