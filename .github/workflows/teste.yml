@@ -15,9 +15,9 @@ jobs:
         id: inventory
         shell: bash
         run: |
-          if [ "${{ github.event.schedule }}" = "0 9 * * 1-5" ]; then
+          if [ "${{ github.event.schedule }}" = "0 8 * * 1-5" ]; then
             branch="dev"
-          elif [ "${{ github.event.schedule }}" = "0 6 * * 1-5" ]; then
+          elif [ "${{ github.event.schedule }}" = "0 5 * * 1-5" ]; then
             branch="qual"
           elif [ "${{ github.event.schedule }}" = "50 20 * * 0"]; then
             echo "This is Sunday!! Nothing to say!"
