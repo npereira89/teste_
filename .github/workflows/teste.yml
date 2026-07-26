@@ -14,7 +14,7 @@ jobs:
         id: inventory
         shell: bash
         run: |
-          if [ "${{ github.event.schedule }}" = "0 9 * * *" ]; then
+          if [ "${{ github.event.schedule }}" = "0 9 * * 1-5" ]; then
             branch="dev"
           elif [ "${{ github.event.schedule }}" = "0 6 * * 1-5" ]; then
             branch="qual"
