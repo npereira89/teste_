@@ -2,8 +2,8 @@ name: Agenda
 
 on:
   schedule:
-    - cron: "0 22 * * 0"  # it will run at 22:50 PM Lisbon time in Sunday
-    
+    - cron: '*/15 * * * *'  # roda a cada 15 minutos em UTC; valida-se depois a hora local em Lisboa
+
 jobs:
   validate-context:
     name: Validate workflow context
@@ -13,11 +13,16 @@ jobs:
         id: inventory
         shell: bash
         run: |
-          if [ "${{ github.event.schedule }}" == "0 22 * * 0"  ]; then
-            echo "OK!!"
+          current_time="$(TZ=Europe/Lisbon date '+%H:%M')"
+          current_day="$(TZ=Europe/Lisbon date '+%u')"  # 1 = segunda, 7 = domingo
+          echo "Hora local em Lisboa: ${current_time} (dia da semana ${current_day})"
+
+          if [ "${current_day}" = "7" ] && [ "${current_time}" = "23:10" ]; then
+            echo "schedule_match=true" >> "$GITHUB_OUTPUT"
           else
-            echo "NOK!!"
+            echo "schedule_match=false" >> "$GITHUB_OUTPUT"
           fi
-          
-          
-          
+
+      - name: Run only at 23:10 Lisbon time on Sunday
+        if: steps.inventory.outputs.schedule_match == 'true'
+        run: echo "É 23:10 em Lisboa; o workflow continua."         
