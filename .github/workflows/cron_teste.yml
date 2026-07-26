@@ -13,7 +13,7 @@ jobs:
         id: inventory
         shell: bash
         run: |
-          if [ "${{ github.event.schedule }}" = "50 22 * * 0"  ]; then
+          if [ "${{ github.event.schedule }}" = "50 21 * * 0"  ]; then
             echo "OK!!"
           else
             echo "NOK!!"
