@@ -4,6 +4,7 @@ on:
   schedule:
     - cron: '0 9 * * 1-5' #  
     - cron: "0 6 * * 1-5"  
+    - cron: "50 20 * * 0"  
 
 jobs:
   validate-context:
@@ -18,6 +19,8 @@ jobs:
             branch="dev"
           elif [ "${{ github.event.schedule }}" = "0 6 * * 1-5" ]; then
             branch="qual"
+          elif [ "${{ github.event.schedule }}" = "50 20 * * 0"]; then
+            echo "This is Sunday!! Nothing to say!"
           fi
 
           echo "branch=${branch}" >> "$GITHUB_OUTPUT"
