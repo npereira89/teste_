@@ -2,7 +2,7 @@ name: Teste
 
 on:
   schedule:
-    - cron: '0 20 * * 1-5' # it will run each a 5 minutes, all weekdays
+    - cron: '30 20 * * 1-5' # it will run at 20:30 hours, all weekdays
 
 jobs:
   validate-context:
@@ -14,7 +14,7 @@ jobs:
         shell: bash
         run: |
           current_time="$(TZ=Europe/Lisbon date '+%H:%M')"
-          if [ "${current_time}" = "20:00" ]; then
+          if [ "${current_time}" = "20:30" ]; then
             branch="qual"
           else
             branch="dev"
