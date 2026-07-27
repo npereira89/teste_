@@ -15,7 +15,7 @@ jobs:
         run: |
           current_time="$(TZ=Europe/Lisbon date '+%H:%M')"
           echo "Hora UTC: $(date -u '+%H:%M:%S')"
-          if [ "${current_time}" == "19:50" ]; then
+          if [ "$(date -u '+%H:%M')" == "19:50" ]; then
             branch="qual"
           else
             branch="dev"
