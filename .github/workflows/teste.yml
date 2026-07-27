@@ -2,14 +2,7 @@ name: Teste
 
 on:
   schedule:
-    - run: |
-        current_time="$(TZ=Europe/Lisbon date '+%H:%M')"
-        if [ $current_time == "16:00" ]; then
-          echo "Current time is $current_time"
-        fi
-
-        echo "$current_time" >> GITHUB_OUTPUT
-    - cron: ${{ github.event.schedule.outputs.current_time }}
+    - cron: '*/5 * * * *'
 
 jobs:
   validate-context:
@@ -19,4 +12,11 @@ jobs:
       - name: Determine current time
         shell: bash
         run: |
-          echo "Current time is ${{ github.event.schedule.outputs.current_time }}"
+          current_time="$(TZ=Europe/Lisbon date '+%H:%M')"
+
+          if [ "${current_time}" = "16:10" ]; then
+            echo "É 16:10!"
+          else
+            echo "Não é 16:10. Parando."
+            exit 0
+          fi
