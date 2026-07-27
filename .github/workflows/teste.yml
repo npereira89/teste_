@@ -2,7 +2,7 @@ name: Teste
 
 on:
   schedule:
-    - cron: '*/1 * * * *' # it will run each a 1 minute, all weekdays
+    - cron: '*/5 * * * *'  # a cada 5 minutos em UTC
 
 jobs:
   validate-context:
@@ -13,6 +13,7 @@ jobs:
         shell: bash
         run: |
           current_time="$(TZ=Europe/Lisbon date '+%H:%M')"
-          if [ "${current_time}" = "15:20" ]; then
+          current_day="$(TZ=Europe/Lisbon date '+%u')"
+          if [ "${current_day}" = "1" ] && [ "${current_time}" = "15:25" ]; then
             echo "Current time is $current_time"
           fi
