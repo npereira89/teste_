@@ -1,12 +1,8 @@
 name: Teste
 
 on:
-  workflow_dispatch:
-    inputs:
-      branch:
-        description: 'Branch to checkout'
-        required: false
-        default: 'main'
+  schedule:
+    - cron: '*/5 * * * *' # it will run each a 5 minutes, all weekdays
 
 jobs:
   validate-context:
