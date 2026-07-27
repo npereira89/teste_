@@ -3,12 +3,6 @@ name: Teste
 on:
   schedule:
     - cron: '50 20 * * 1-5' # it will run at 21:10 hours, all weekdays
-  workflow_dispatch:
-    inputs:
-      branch:
-        description: 'Branch to checkout'
-        required: false
-        default: 'main'
 
 jobs:
   validate-context:
