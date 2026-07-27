@@ -17,4 +17,6 @@ jobs:
         shell: bash
         run: |
           current_time="$(TZ=Europe/Lisbon date '+%H:%M')"
-          echo "Current time: $current_time"
+          if [ $current_time = "15:05" ]; then
+            echo "Current time is $current_time"
+          fi
