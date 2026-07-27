@@ -2,21 +2,33 @@ name: Teste
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '0 20 * * 1-5' # it will run each a 5 minutes, all weekdays
 
 jobs:
   validate-context:
     name: Validate workflow context
     runs-on: ubuntu-latest
     steps:
-      - name: Determine current time
+      - name: Determine branch from schedule
+        id: inventory
         shell: bash
         run: |
           current_time="$(TZ=Europe/Lisbon date '+%H:%M')"
-
-          if [ "${current_time}" = "16:10" ]; then
-            echo "É 16:10!"
-          else
-            echo "Não é 16:10. Parando."
-            exit 0
+          if [ "${current_time}" = "19:45" ]; then
+            branch="dev"
+          elif [ "${current_time}" = "20:00" ]; then
+            branch="qual"
           fi
+
+          echo "branch=${branch}" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout branch to consider
+        uses: actions/checkout@v7
+        with:
+          repository: ${{ github.repository }}
+          ref: ${{ steps.inventory.outputs.branch }}
+          show-progress: true
+
+      - name: Show README content
+        run: |
+          cat README.md
