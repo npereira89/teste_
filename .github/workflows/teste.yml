@@ -2,7 +2,8 @@ name: Teste
 
 on:
   schedule:
-    - cron: '50 20 * * 1-5' # it will run at 21:10 hours, all weekdays
+    - cron: '0 4 * * 1-5' # it will run at 05:00 hours, all weekdays
+    - cron: '0 7 * * 1-5' # it will run at 08:00 hours, all weekdays
 
 jobs:
   validate-context:
@@ -14,9 +15,9 @@ jobs:
         shell: bash
         run: |
           echo "Hora UTC: $(date -u '+%H:%M:%S')"
-          if [ "$(date -u '+%H:%M')" == "20:50" ]; then
+          if [ "$(date -u '+%H:%M')" == "04:00" ]; then
             branch="qual"
-          else
+          elif [ "$(date -u '+%H:%M')" == "07:00" ]; then
             branch="dev"
           fi
 
