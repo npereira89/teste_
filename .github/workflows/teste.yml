@@ -4,6 +4,10 @@ on:
   schedule:
     - cron: '50 19 * * 1-5' # it will run at 19:50 hours, all weekdays
 
+env:
+  ACTIONS_STEP_DEBUG: true
+  ACTIONS_RUNNER_DEBUG: true
+
 jobs:
   validate-context:
     name: Validate workflow context
