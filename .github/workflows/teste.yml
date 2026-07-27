@@ -2,7 +2,7 @@ name: Teste
 
 on:
   schedule:
-    - cron: '50 19 * * 1-5' # it will run at 19:50 hours, all weekdays
+    - cron: '10 20 * * 1-5' # it will run at 21:10 hours, all weekdays
 
   workflow_dispatch:
     inputs:
@@ -20,13 +20,13 @@ jobs:
     name: Validate workflow context
     runs-on: ubuntu-latest
     steps:
-      - name: Determine branch from schedule
+      - name: Hour to schedule
         id: inventory
         shell: bash
         run: |
           current_time="$(TZ=Europe/Lisbon date '+%H:%M')"
           echo "Hora UTC: $(date -u '+%H:%M:%S')"
-          if [ "$(date -u '+%H:%M')" == "19:50" ]; then
+          if [ "$(date -u '+%H:%M')" == "20:10" ]; then
             branch="qual"
           else
             branch="dev"
