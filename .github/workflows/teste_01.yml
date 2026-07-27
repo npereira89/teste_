@@ -2,7 +2,7 @@ name: Teste de agendamento
 
 on:
   schedule:
-    - cron: '30 20 * * *'
+    - cron: '0 21 * * *'
       branches:
         include:
         - main
@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Determine hour executed from schedule
-        id: inventory
+        id: hours
         shell: bash
         run: |
-          echo "Este workflow foi disparado pelo agendamento do GitHub Actions às $(date +'%H:%M:%S')"
+          echo "Este workflow foi disparado pelo agendamento do GitHub Actions às $(date +'%H:%M')"
