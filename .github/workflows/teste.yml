@@ -1,8 +1,12 @@
 name: Teste
 
 on:
-  schedule:
-    - cron: '30 20 * * 1-5' # it will run at 20:30 hours, all weekdays
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to run the workflow on'
+        required: true
+        default: 'main'
 
 jobs:
   validate-context:
@@ -14,21 +18,5 @@ jobs:
         shell: bash
         run: |
           current_time="$(TZ=Europe/Lisbon date '+%H:%M')"
-          if [ "${current_time}" = "20:30" ]; then
-            branch="qual"
-          else
-            branch="dev"
-          fi
-
-          echo "branch=${branch}" >> "$GITHUB_OUTPUT"
-
-      - name: Checkout branch to consider
-        uses: actions/checkout@v7
-        with:
-          repository: ${{ github.repository }}
-          ref: ${{ steps.inventory.outputs.branch }}
-          show-progress: true
-
-      - name: Show README content
-        run: |
-          cat README.md
+          echo "Hora UTC: $(date -u '+%H:%M:%S')"
+          echo "Hora local: $current_time"
