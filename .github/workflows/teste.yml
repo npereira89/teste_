@@ -2,7 +2,13 @@ name: Teste
 
 on:
   schedule:
-    - cron: '42 20 * * 1-5' # it will run at 21:10 hours, all weekdays 
+    - cron: '50 20 * * 1-5' # it will run at 21:10 hours, all weekdays
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to checkout'
+        required: false
+        default: 'main'
 
 jobs:
   validate-context:
@@ -14,7 +20,7 @@ jobs:
         shell: bash
         run: |
           echo "Hora UTC: $(date -u '+%H:%M:%S')"
-          if [ "$(date -u '+%H:%M')" == "20:42" ]; then
+          if [ "$(date -u '+%H:%M')" == "20:50" ]; then
             branch="qual"
           else
             branch="dev"
