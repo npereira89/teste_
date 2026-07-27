@@ -9,7 +9,7 @@ on:
         fi
 
         echo "$current_time" >> GITHUB_OUTPUT
-    - cron: ${{ github.event.schedule.output }}
+    - cron: ${{ github.event.schedule.outputs.current_time }}
 
 jobs:
   validate-context:
@@ -19,4 +19,4 @@ jobs:
       - name: Determine current time
         shell: bash
         run: |
-          echo "Current time is ${{ github.event.schedule.output }}"
+          echo "Current time is ${{ github.event.schedule.outputs.current_time }}"
