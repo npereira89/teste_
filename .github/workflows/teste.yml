@@ -1,32 +1,20 @@
 name: Teste
 
 on:
-  schedule:
-    - cron: '*/5 * * * *' # it will run each a 5 minutes, all weekdays
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to checkout'
+        required: false
+        default: 'main'
 
 jobs:
   validate-context:
     name: Validate workflow context
     runs-on: ubuntu-latest
     steps:
-      - name: Determine branch from schedule
-        id: inventory
+      - name: Determine current time
         shell: bash
         run: |
           current_time="$(TZ=Europe/Lisbon date '+%H:%M')"
-          if [ "${current_time}" = "14:55" ]; then
-            branch="dev"
-          fi
-
-          echo "branch=${branch}" >> "$GITHUB_OUTPUT"
-
-      - name: Checkout branch to consider
-        uses: actions/checkout@v7
-        with:
-          repository: ${{ github.repository }}
-          ref: ${{ steps.inventory.outputs.branch }}
-          show-progress: true
-
-      - name: Show README content
-        run: |
-          cat README.md
+          echo "Current time: $current_time"
