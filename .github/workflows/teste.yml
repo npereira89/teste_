@@ -2,7 +2,7 @@ name: Teste
 
 on:
   schedule:
-    - cron: '25 20 * * 1-5' # it will run at 21:10 hours, all weekdays 
+    - cron: '42 20 * * 1-5' # it will run at 21:10 hours, all weekdays 
 
 jobs:
   validate-context:
@@ -13,9 +13,8 @@ jobs:
         id: inventory
         shell: bash
         run: |
-          current_time="$(TZ=Europe/Lisbon date '+%H:%M')"
           echo "Hora UTC: $(date -u '+%H:%M:%S')"
-          if [ "$(date -u '+%H:%M')" == "20:25" ]; then
+          if [ "$(date -u '+%H:%M')" == "20:42" ]; then
             branch="qual"
           else
             branch="dev"
