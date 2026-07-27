@@ -4,13 +4,6 @@ on:
   schedule:
     - cron: '10 20 * * 1-5' # it will run at 21:10 hours, all weekdays
 
-  workflow_dispatch:
-    inputs:
-      branch:
-        description: 'Branch to checkout'
-        required: false
-        default: 'main'
-
 env:
   ACTIONS_STEP_DEBUG: true
   ACTIONS_RUNNER_DEBUG: true
