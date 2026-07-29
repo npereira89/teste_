@@ -1,9 +1,27 @@
 name: Teste
 
+run-name: >-
+  ${{
+    github.event_name == 'schedule' &&
+    (
+      github.event.schedule == '05 03 * * *' && 'Deploy netwin-ptc-dev (Schedule)' ||
+      github.event.schedule == '25 17 * * *' && 'Deploy netwin-ptc-tst (Schedule)'
+    ) ||
+    format('Deploy {0}', inputs.inventory)
+  }}
+
+  if github.event.schedule == '05 03 * * *' then
+    branch="qual"
+  elif github.event.schedule == '25 17 * * *' then
+    branch="dev"
+  fi
+
+  echo "branch=${branch}" >> "$GITHUB_OUTPUT"
+
 on:
   schedule:
-    - cron: '0 4 * * 1-5' # it will run at 05:00 hours, all weekdays
-    - cron: '0 7 * * 1-5' # it will run at 08:00 hours, all weekdays
+    - cron: "05 03 * * *" # netwin-ptc-dev
+    - cron: "25 17 * * *" # netwin-ptc-tst
 
 jobs:
   validate-context:
@@ -15,13 +33,6 @@ jobs:
         shell: bash
         run: |
           echo "Hora UTC: $(date -u '+%H:%M:%S')"
-          if [ "$(date -u '+%H:%M')" == "04:00" ]; then
-            branch="qual"
-          elif [ "$(date -u '+%H:%M')" == "07:00" ]; then
-            branch="dev"
-          fi
-
-          echo "branch=${branch}" >> "$GITHUB_OUTPUT"
 
       - name: Checkout branch to consider
         uses: actions/checkout@v7
