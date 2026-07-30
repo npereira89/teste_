@@ -4,14 +4,14 @@ run-name: >-
   ${{
     github.event_name == 'schedule' &&
     (
-      github.event.schedule == '10 20 * * *' 
+      github.event.schedule == '30 20 * * *' 
     ) ||
     format('Deploy {0}', inputs.inventory)
   }}
 
 on:
   schedule:
-    - cron: "10 20 * * *" # netwin-ptc-tst
+    - cron: "30 20 * * *" # netwin-ptc-tst
   workflow_dispatch:
     inputs:
       inventory:
