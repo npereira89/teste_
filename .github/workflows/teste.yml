@@ -1,17 +1,9 @@
 name: Teste
 
-run-name: >-
-  ${{
-    github.event_name == 'schedule' &&
-    (
-      github.event.schedule == '50 21 * * *' && inputs.inventory == 'dev'
-    ) ||
-    format('Deploy {0}', inputs.inventory)
-  }}
-
 on:
   schedule:
-    - cron: "50 21 * * *" # dev
+    - cron: "0 22 * * *" # dev
+    - cron: "10 22 * * *" # dev
 
 jobs:
   validate-context:
@@ -22,11 +14,13 @@ jobs:
         id: getBranch
         shell: bash
         run: |
-          if [ "${{ github.event.schedule }}" = "50 21 * * *" ]; then
+          if [ "${{ github.event.schedule }}" = "0 22 * * *" ]; then
             branch="dev" >> $GITHUB_OUTPUT
-          else
+          elif [ "${{ github.event.schedule }}" = "10 22 * * *" ]; then
             branch="qual" >> $GITHUB_OUTPUT
           fi
+
+          echo "Nothing to do for schedule!!"
 
       - name: Checkout branch to consider
         uses: actions/checkout@v7
