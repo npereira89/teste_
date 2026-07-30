@@ -4,8 +4,8 @@ run-name: >-
   ${{
     github.event_name == 'schedule' &&
     (
-      github.event.schedule == '45 22 * * *' && 'Deploy Developer (Schedule)' ||
-      github.event.schedule == '50 22 * * *' && 'Deploy Qualidade (Schedule)' 
+      github.event.schedule == '0 2 * * *' && 'Deploy Developer (Schedule)' ||
+      github.event.schedule == '0 5 * * *' && 'Deploy Qualidade (Schedule)' 
     ) ||
     format('Deploy {0}', inputs.inventory)
   }}
@@ -13,8 +13,8 @@ run-name: >-
 
 on:
   schedule:
-    - cron: "45 22 * * *" # dev
-    - cron: "50 22 * * *" # qual
+    - cron: "0 2 * * *" # dev
+    - cron: "0 5 * * *" # qual
 
 jobs:
   validate-context:
@@ -26,9 +26,9 @@ jobs:
         shell: bash
         run: |
 
-          if [ "${{ github.event.schedule }}" = "45 22 * * *" ]; then
+          if [ "${{ github.event.schedule }}" = "0 2 * * *"  ]; then
             branch="dev"
-          elif [ "${{ github.event.schedule }}" = "50 22 * * *"  ]; then
+          elif [ "${{ github.event.schedule }}" = "0 5 * * *"  ]; then
             branch="qual"
           else
             echo "No schedule match for this workflow run."
