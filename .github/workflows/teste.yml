@@ -2,16 +2,19 @@ name: Teste
 
 run-name: >-
   ${{
-      github.event_name == 'schedule' &&
-      (
-        github.event.schedule == '10 22 * * *'
-      ) ||
-      format('Deploy {0}', inputs.inventory)
-    }}
+    github.event_name == 'schedule' &&
+    (
+      github.event.schedule == '20 22 * * *' && 'Deploy Developer (Schedule)' ||
+      github.event.schedule == '30 22 * * *' && 'Deploy Qualidade (Schedule)' 
+    ) ||
+    format('Deploy {0}', inputs.inventory)
+  }}
+
 
 on:
   schedule:
-    - cron: "10 22 * * *" # dev
+    - cron: "20 22 * * *" # dev
+    - cron: "30 22 * * *" # qual
 
 jobs:
   validate-context:
@@ -22,9 +25,9 @@ jobs:
         id: getBranch
         shell: bash
         run: |
-          if [ "${{ github.event.schedule }}" = "10 22 * * *" ]; then
-            branch="qual" >> $GITHUB_OUTPUT
-          else
+          if [ "${{ github.event.schedule }}" = "20 22 * * *" ]; then
+            branch="dev" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event.schedule }}" = "30 22 * * *" ]; then
             branch="qual" >> $GITHUB_OUTPUT
           fi
 
