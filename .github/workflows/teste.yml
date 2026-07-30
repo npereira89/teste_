@@ -4,26 +4,25 @@ run-name: >-
   ${{
     github.event_name == 'schedule' &&
     (
-      github.event.schedule == '10 21 * * *' && inputs.inventory = 'dev'
+      github.event.schedule == '15 21 * * *' && inputs.inventory = 'dev'
     ) ||
     format('Deploy {0}', inputs.inventory)
   }}
 
 on:
   schedule:
-    - cron: "10 21 * * *" # dev
+    - cron: "15 21 * * *" # dev
+  workflow_dispatch:
+    inputs:
+      inventory:
+        description: 'Branch to consider'
+        required: true
 
 jobs:
   validate-context:
     name: Validate workflow context
     runs-on: ubuntu-latest
     steps:
-      - name: Hour to schedule
-        id: inventory
-        shell: bash
-        run: |
-          echo "Hora UTC: $(date -u '+%H:%M')"
-
       - name: Get branch to consider
         id: getBranch
         shell: bash
