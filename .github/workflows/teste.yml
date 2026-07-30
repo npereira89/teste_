@@ -5,7 +5,7 @@ run-name: >-
     github.event_name == 'schedule' &&
     (
       github.event.schedule == '15 21 * * *' && 
-      github.event.schedule == '25 21 * * *'
+      github.event.schedule == '30 21 * * *'
     ) ||
     format('Deploy {0}', inputs.inventory)
   }}
@@ -13,7 +13,7 @@ run-name: >-
 on:
   schedule:
     - cron: "15 21 * * *" # dev
-    - cron: "25 21 * * *" # qual
+    - cron: "30 21 * * *" # qual
   workflow_dispatch:
     inputs:
       inventory:
@@ -31,7 +31,7 @@ jobs:
         run: |
           if [ "${{ github.event.schedule }}" = "15 21 * * *" ]; then
             branch="dev"
-          elif [ "${{ github.event.schedule }}" = "25 21 * * *" ]; then
+          elif [ "${{ github.event.schedule }}" = "30 21 * * *" ]; then
             branch="qual"
           else
             branch="${{ inputs.inventory }}"
