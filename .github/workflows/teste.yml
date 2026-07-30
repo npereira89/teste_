@@ -4,7 +4,8 @@ run-name: >-
   ${{
     github.event_name == 'schedule' &&
     (
-      github.event.schedule == '15 21 * * *' && inputs.inventory == 'dev'
+      github.event.schedule == '15 21 * * *' && inputs.inventory == 'dev' &&
+      github.event.schedule == '25 21 * * *' && inputs.inventory == 'qual'
     ) ||
     format('Deploy {0}', inputs.inventory)
   }}
@@ -12,6 +13,7 @@ run-name: >-
 on:
   schedule:
     - cron: "15 21 * * *" # dev
+    - cron: "25 21 * * *" # qual
   workflow_dispatch:
     inputs:
       inventory:
@@ -27,8 +29,15 @@ jobs:
         id: getBranch
         shell: bash
         run: |
-          echo "Branch to consider: ${{ inputs.inventory }}"
-          echo branch="${{ inputs.inventory }}" >> $GITHUB_OUTPUT
+          if [ "${{ github.event.schedule }}" = "15 21 * * *" ]; then
+            branch="dev"
+          elif [ "${{ github.event.schedule }}" = "25 21 * * *" ]; then
+            branch="qual"
+          else
+            branch="${{ inputs.inventory }}"
+          fi
+
+          branch="${{ inputs.inventory }}" >> $GITHUB_OUTPUT
 
       - name: Checkout branch to consider
         uses: actions/checkout@v7
