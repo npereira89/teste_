@@ -4,14 +4,14 @@ run-name: >-
   ${{
     github.event_name == 'schedule' &&
     (
-      github.event.schedule == '45 21 * * *'
+      github.event.schedule == '50 21 * * *' && inputs.inventory == 'dev'
     ) ||
     format('Deploy {0}', inputs.inventory)
   }}
 
 on:
   schedule:
-    - cron: "45 21 * * *" # qual
+    - cron: "50 21 * * *" # dev
 
 jobs:
   validate-context:
@@ -22,10 +22,10 @@ jobs:
         id: getBranch
         shell: bash
         run: |
-          if [ "${{ github.event.schedule }}" = "45 21 * * *" ]; then
-            branch="qual" >> $GITHUB_OUTPUT
-          else
+          if [ "${{ github.event.schedule }}" = "50 21 * * *" ]; then
             branch="dev" >> $GITHUB_OUTPUT
+          else
+            branch="qual" >> $GITHUB_OUTPUT
           fi
 
       - name: Checkout branch to consider
