@@ -12,11 +12,6 @@ run-name: >-
 on:
   schedule:
     - cron: "35 21 * * *" # qual
-  workflow_dispatch:
-    inputs:
-      inventory:
-        description: 'Branch to consider'
-        required: true
 
 jobs:
   validate-context:
