@@ -2,7 +2,7 @@ name: Teste de agendamento
 
 on:
   schedule:
-    - cron: '10 21 * * *'
+    - cron: '0 0 * * *'
 
 jobs:
   validate-context:
