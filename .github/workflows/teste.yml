@@ -4,14 +4,14 @@ run-name: >-
   ${{
     github.event_name == 'schedule' &&
     (
-      github.event.schedule == '35 21 * * *'
+      github.event.schedule == '45 21 * * *'
     ) ||
     format('Deploy {0}', inputs.inventory)
   }}
 
 on:
   schedule:
-    - cron: "35 21 * * *" # qual
+    - cron: "45 21 * * *" # qual
 
 jobs:
   validate-context:
@@ -22,7 +22,7 @@ jobs:
         id: getBranch
         shell: bash
         run: |
-          if [ "${{ github.event.schedule }}" = "35 21 * * *" ]; then
+          if [ "${{ github.event.schedule }}" = "45 21 * * *" ]; then
             branch="qual" >> $GITHUB_OUTPUT
           else
             branch="dev" >> $GITHUB_OUTPUT
