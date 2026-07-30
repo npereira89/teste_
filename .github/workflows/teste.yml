@@ -4,8 +4,8 @@ run-name: >-
   ${{
     github.event_name == 'schedule' &&
     (
-      github.event.schedule == '15 21 * * *' && inputs.inventory == 'dev' &&
-      github.event.schedule == '25 21 * * *' && inputs.inventory == 'qual'
+      github.event.schedule == '15 21 * * *' && 
+      github.event.schedule == '25 21 * * *'
     ) ||
     format('Deploy {0}', inputs.inventory)
   }}
