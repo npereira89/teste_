@@ -13,12 +13,12 @@ on:
   schedule:
     - cron: "55 20 * * *" # dev
 
-  workflow_dispatch:
-    inputs:
-      inventory:
-        description: 'Inventory to deploy'
-        required: true
-        default: 'master'
+  #workflow_dispatch:
+  #  inputs:
+  #    inventory:
+  #      description: 'Inventory to deploy'
+  #      required: true
+  #      default: 'master'
 
 jobs:
   validate-context:
@@ -35,8 +35,8 @@ jobs:
         id: getBranch
         shell: bash
         run: |
-          echo "Branch to consider: ${{ github.event.inputs.inventory }}"
-          echo branch="${{ github.event.inputs.inventory }}" >> $GITHUB_OUTPUT
+          echo "Branch to consider: ${{ inputs.inventory }}"
+          echo branch="${{ inputs.inventory }}" >> $GITHUB_OUTPUT
 
       - name: Checkout branch to consider
         uses: actions/checkout@v7
