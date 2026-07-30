@@ -4,24 +4,23 @@ run-name: >-
   ${{
     github.event_name == 'schedule' &&
     (
-      github.event.schedule == '05 03 * * *' && 'Deploy netwin-ptc-dev (Schedule)' ||
-      github.event.schedule == '25 17 * * *' && 'Deploy netwin-ptc-tst (Schedule)'
+      github.event.schedule == '10 20 * * *' 
     ) ||
     format('Deploy {0}', inputs.inventory)
   }}
 
-  if github.event.schedule == '05 03 * * *' then
-    branch="qual"
-  elif github.event.schedule == '25 17 * * *' then
-    branch="dev"
-  fi
-
-  echo "branch=${branch}" >> "$GITHUB_OUTPUT"
-
 on:
   schedule:
-    - cron: "05 03 * * *" # netwin-ptc-dev
-    - cron: "25 17 * * *" # netwin-ptc-tst
+    - cron: "10 20 * * *" # netwin-ptc-tst
+  workflow_dispatch:
+    inputs:
+      inventory:
+        description: 'Inventory to deploy'
+        required: true
+        default: 'master'
+        run: |
+          echo "Inventory: ${{ github.event.inputs.inventory }}" 
+          branch="${{ github.event.inputs.inventory }}" >> $GITHUB_OUTPUT  
 
 jobs:
   validate-context:
@@ -32,7 +31,7 @@ jobs:
         id: inventory
         shell: bash
         run: |
-          echo "Hora UTC: $(date -u '+%H:%M:%S')"
+          echo "Hora UTC: $(date -u '+%H:%M')"
 
       - name: Checkout branch to consider
         uses: actions/checkout@v7
