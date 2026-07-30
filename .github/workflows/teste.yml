@@ -4,8 +4,8 @@ run-name: >-
   ${{
     github.event_name == 'schedule' &&
     (
-      github.event.schedule == '35 22 * * *' && 'Deploy Developer (Schedule)' ||
-      github.event.schedule == '30 22 * * *' && 'Deploy Qualidade (Schedule)' 
+      github.event.schedule == '45 22 * * *' && 'Deploy Developer (Schedule)' ||
+      github.event.schedule == '50 22 * * *' && 'Deploy Qualidade (Schedule)' 
     ) ||
     format('Deploy {0}', inputs.inventory)
   }}
@@ -13,8 +13,8 @@ run-name: >-
 
 on:
   schedule:
-    - cron: "35 22 * * *" # dev
-    - cron: "30 22 * * *" # qual
+    - cron: "45 22 * * *" # dev
+    - cron: "50 22 * * *" # qual
 
 jobs:
   validate-context:
@@ -25,13 +25,18 @@ jobs:
         id: getBranch
         shell: bash
         run: |
-          if [ "${{ github.event.schedule }}" = "35 22 * * *" ]; then
-             echo "branch=dev" >> "$GITHUB_OUTPUT"
-          elif [ "${{ github.event.schedule }}" = "30 22 * * *" ]; then
-            echo "branch=qual" >> "$GITHUB_OUTPUT"
+
+          if [ "${{ github.event.schedule }}" = "45 22 * * *" ]; then
+            branch="dev"
+          elif [ "${{ github.event.schedule }}" = "50 22 * * *"  ]; then
+            branch="qual"
+          else
+            echo "No schedule match for this workflow run."
           fi
 
-          echo "Nothing to do for schedule!!"
+          echo "Selected branch: ${branch}"
+          echo "branch=${branch}" >> "$GITHUB_OUTPUT"
+
 
       - name: Checkout branch to consider
         uses: actions/checkout@v7
