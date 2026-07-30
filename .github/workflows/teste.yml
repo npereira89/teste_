@@ -18,9 +18,6 @@ on:
         description: 'Inventory to deploy'
         required: true
         default: 'master'
-        run: |
-          echo "Inventory: ${{ github.event.inputs.inventory }}" 
-          branch="${{ github.event.inputs.inventory }}" >> $GITHUB_OUTPUT  
 
 jobs:
   validate-context:
@@ -32,6 +29,13 @@ jobs:
         shell: bash
         run: |
           echo "Hora UTC: $(date -u '+%H:%M')"
+
+      - name: Get branch to consider
+        id: inventory
+        shell: bash
+        run: |
+          echo "Branch to consider: ${{ github.event.inputs.inventory }}"
+          echo branch="${{ github.event.inputs.inventory }}" >> $GITHUB_OUTPUT
 
       - name: Checkout branch to consider
         uses: actions/checkout@v7
