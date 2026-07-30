@@ -4,21 +4,14 @@ run-name: >-
   ${{
     github.event_name == 'schedule' &&
     (
-      github.event.schedule == '55 20 * * *' && inputs.inventory == 'dev'
+      github.event.schedule == '10 21 * * *' && inputs.inventory = 'dev'
     ) ||
     format('Deploy {0}', inputs.inventory)
   }}
 
 on:
   schedule:
-    - cron: "55 20 * * *" # dev
-
-  #workflow_dispatch:
-  #  inputs:
-  #    inventory:
-  #      description: 'Inventory to deploy'
-  #      required: true
-  #      default: 'master'
+    - cron: "10 21 * * *" # dev
 
 jobs:
   validate-context:
