@@ -22,12 +22,10 @@ jobs:
         id: getBranch
         shell: bash
         run: |
-          if [ "${{ github.event.schedule }}" = "15 21 * * *" ]; then
-            branch="dev" >> $GITHUB_OUTPUT
-          elif [ "${{ github.event.schedule }}" = "35 21 * * *" ]; then
+          if [ "${{ github.event.schedule }}" = "35 21 * * *" ]; then
             branch="qual" >> $GITHUB_OUTPUT
           else
-            branch="${{ inputs.inventory }}" >> $GITHUB_OUTPUT
+            branch="dev" >> $GITHUB_OUTPUT
           fi
 
       - name: Checkout branch to consider
